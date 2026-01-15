@@ -19,6 +19,8 @@ class HydrationAreaChart extends StatelessWidget {
 
     return LineChart(
       LineChartData(
+        minX: -0.5,
+        maxX: entries.length - 0.25,
         minY: 0,
         maxY: 100,
 
@@ -35,9 +37,7 @@ class HydrationAreaChart extends StatelessWidget {
                 if (value % 20 != 0) return const SizedBox.shrink();
                 return Text(
                   '${value.toInt()}%',
-                  style: AppTextStyles.body.copyWith(
-                    color: Colors.white.withOpacity(0.7),
-                  ),
+                  style: AppTextStyles.chartYAxisLabel,
                 );
               },
             ),
@@ -49,24 +49,26 @@ class HydrationAreaChart extends StatelessWidget {
               interval: 1,
               reservedSize: 30,
               getTitlesWidget: (value, meta) {
+                if (value % 1 != 0) {
+                  return const SizedBox.shrink();
+                }
+
                 final index = value.toInt();
+
                 if (index < 0 || index >= entries.length) {
                   return const SizedBox.shrink();
                 }
 
                 final entry = entries[index];
 
-                // Weekly
                 if (interval == IntervalType.weekly) {
                   return _xLabel(entry.date.day.toString());
                 }
 
-                // Yearly
                 if (interval == IntervalType.yearly) {
                   return _xLabel(DateFormat.MMM().format(entry.date));
                 }
 
-                // Monthly
                 const allowedDays = [1, 5, 10, 15, 20, 25, 30];
                 if (!allowedDays.contains(entry.date.day)) {
                   return const SizedBox.shrink();
@@ -80,41 +82,56 @@ class HydrationAreaChart extends StatelessWidget {
           rightTitles: AxisTitles(),
           topTitles: AxisTitles(),
         ),
+
         //Touch and tooltip
         lineTouchData: LineTouchData(
+          enabled: true,
           handleBuiltInTouches: true,
           touchTooltipData: LineTouchTooltipData(
-            getTooltipColor: (_) => AppColors.tooltipBg,
+            fitInsideHorizontally: true,
+            tooltipMargin: 10,
             tooltipPadding: const EdgeInsets.symmetric(
-              horizontal: 14,
-              vertical: 8,
+              horizontal: 4,
+              vertical: 12,
             ),
-            tooltipMargin: 12,
+            tooltipBorderRadius: BorderRadius.circular(100),
+            tooltipBorder: BorderSide(
+              color: AppColors.barChartActiveColor,
+              width: 4,
+            ),
+            getTooltipColor: (_) => Colors.white,
+
             getTooltipItems: (spots) {
+              const double dailyTargetLitres = 2.5;
+
               return spots.map((spot) {
+                final litres = (spot.y / 100) * dailyTargetLitres;
+
                 return LineTooltipItem(
-                  '${spot.y.toInt()}%',
-                  AppTextStyles.semiBold.copyWith(color: Colors.white),
+                  '${litres.toStringAsFixed(2)} L',
+                  AppTextStyles.chartTooltip,
                 );
               }).toList();
             },
           ),
         ),
+
         //Area section
         lineBarsData: [
           LineChartBarData(
-            isCurved: true,
+            isCurved: false,
             barWidth: 4,
-            color: AppColors.barChartActiveColor,
+            color: AppColors.areaChartLineColor,
 
             dotData: FlDotData(
               show: true,
+
               getDotPainter: (spot, _, __, ___) {
                 return FlDotCirclePainter(
                   radius: 6,
                   color: Colors.white,
                   strokeWidth: 3,
-                  strokeColor: AppColors.barChartActiveColor,
+                  strokeColor: AppColors.areaChartLineColor,
                 );
               },
             ),
@@ -125,15 +142,15 @@ class HydrationAreaChart extends StatelessWidget {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  AppColors.barChartActiveColor.withOpacity(0.35),
-                  AppColors.barChartActiveColor.withOpacity(0.05),
+                  AppColors.areaChartColor,
+                  AppColors.areaChartColorSecondary.withOpacity(0.05),
                 ],
               ),
             ),
 
             spots: List.generate(
               entries.length,
-              (i) => FlSpot(i.toDouble(), entries[i].value),
+              (i) => FlSpot(i.toDouble(), entries[i].total),
             ),
           ),
         ],
@@ -145,9 +162,6 @@ class HydrationAreaChart extends StatelessWidget {
 Widget _xLabel(String text) {
   return Padding(
     padding: const EdgeInsets.only(top: 8),
-    child: Text(
-      text,
-      style: AppTextStyles.body.copyWith(color: Colors.white.withOpacity(0.6)),
-    ),
+    child: Text(text, style: AppTextStyles.chartXAxisLabel),
   );
 }

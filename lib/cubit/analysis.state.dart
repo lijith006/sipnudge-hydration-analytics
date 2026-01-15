@@ -30,20 +30,40 @@ class AnalysisState {
     );
   }
 
-  // used by  DateNavigator
-  String get formattedRange {
-    final formatter = DateFormat('MMM d');
+  String get formattedRangeWithYear {
+    final year = startDate.year;
+
+    switch (interval) {
+      case IntervalType.weekly:
+        final formatter = DateFormat('MMM d');
+        final end = startDate.add(const Duration(days: 6));
+        return '${formatter.format(startDate)} – ${formatter.format(end)}, $year';
+
+      case IntervalType.monthly:
+        final month = DateFormat('MMMM').format(startDate);
+        return '$month, $year';
+
+      case IntervalType.yearly:
+        return year.toString();
+    }
+  }
+
+  bool get canGoNext {
+    final today = DateTime.now();
 
     switch (interval) {
       case IntervalType.weekly:
         final end = startDate.add(const Duration(days: 6));
-        return '${formatter.format(startDate)} – ${formatter.format(end)}';
+        return end.isBefore(today);
 
       case IntervalType.monthly:
-        return DateFormat('MMMM yyyy').format(startDate);
+        final nextMonth = DateTime(startDate.year, startDate.month + 1);
+        return nextMonth.isBefore(today);
 
       case IntervalType.yearly:
-        return startDate.year.toString();
+        return startDate.year < today.year;
     }
   }
+
+  bool get canGoPrevious => true;
 }

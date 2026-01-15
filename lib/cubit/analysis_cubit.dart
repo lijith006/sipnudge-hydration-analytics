@@ -34,8 +34,32 @@ class AnalysisCubit extends Cubit<AnalysisState> {
   }
 
   void goToNextRange() {
-    final newStart = _calculateNextStartDate();
-    _loadForDate(newStart);
+    if (!state.canGoNext) return;
+
+    switch (state.interval) {
+      case IntervalType.weekly:
+        emit(
+          state.copyWith(
+            startDate: state.startDate.add(const Duration(days: 7)),
+          ),
+        );
+        break;
+
+      case IntervalType.monthly:
+        emit(
+          state.copyWith(
+            startDate: DateTime(
+              state.startDate.year,
+              state.startDate.month + 1,
+            ),
+          ),
+        );
+        break;
+
+      case IntervalType.yearly:
+        emit(state.copyWith(startDate: DateTime(state.startDate.year + 1)));
+        break;
+    }
   }
 
   void goToPreviousRange() {
@@ -50,17 +74,6 @@ class AnalysisCubit extends Cubit<AnalysisState> {
     );
 
     emit(state.copyWith(startDate: startDate, stats: stats));
-  }
-
-  DateTime _calculateNextStartDate() {
-    switch (state.interval) {
-      case IntervalType.weekly:
-        return state.startDate.add(const Duration(days: 7));
-      case IntervalType.monthly:
-        return DateTime(state.startDate.year, state.startDate.month + 1);
-      case IntervalType.yearly:
-        return DateTime(state.startDate.year + 1);
-    }
   }
 
   DateTime _calculatePreviousStartDate() {

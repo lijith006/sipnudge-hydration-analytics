@@ -1,28 +1,3 @@
-// import 'package:flutter/material.dart';
-
-// class AppColors {
-//   // Background
-//   static const Color bgTop = Color(0xFF9B6DFF);
-//   static const Color bgBottom = Color(0xFF3A2D4F);
-
-//   // Cards
-//   static const Color card = Color(0xFF5A476D);
-
-//   // Primary
-//   static const Color primary = Color(0xFF8B5CF6);
-//   static const Color accentBlue = Color(0xFF5AC8FA);
-
-//   // Text
-//   static const Color textPrimary = Colors.white;
-//   static const Color textSecondary = Color(0xFFD1C4E9);
-
-//   // Chart
-//   static const Color bar = Color(0xFF8B5CF6);
-//   static const Color area = Color(0xFF5AC8FA);
-
-//   // Tooltip
-//   static const Color tooltipBg = Color(0xFF2E1F47);
-// }
 import 'package:flutter/material.dart';
 
 class AppColors {
@@ -40,7 +15,7 @@ class AppColors {
   static const Color deep1 = Color(0xFF2A232B);
   static const Color deep2 = Color(0xFF19181A);
 
-  // Accent
+  // HydrationLegend - Pychart Colors
   static const Color accentPurple = Color(0xFF8B5CF6);
   static const Color accentBlue = Color(0xFF5AC8FA);
   static const Color accentGreen = Color(0xFF6EDC8C);
@@ -54,6 +29,9 @@ class AppColors {
 
   //card color
   static const Color card = Color(0xFF917597);
+
+  static Color drinkCompletionCard = Color(0xFF9e7da4);
+
   static const Color intervalTabColor = Color(0xFFa565dd);
   //graph color
   static const Color barChartColor = Color(0xFF7e46a7);
@@ -61,4 +39,19 @@ class AppColors {
   //chart button select color
   static const Color chartTogglebutton = Color(0xFF8a21e7);
   static const Color chartToggleUnselected = Color(0xFFa7a7a7);
+  //Hydration source color
+  static const Color waterColorGradient = Color(0xFF8ac0f4);
+  static const Color waterColorGradientMid = Color(0xFF699fd3);
+
+  static const Color waterColorGradientDark = Color(0xFF205387);
+  // static const Color waterColorGradientMid = Color(0xFF3d71a5);
+
+  static const Color foodColor = Color(0xFF82ca72);
+  static const bottomNavBg = Color(0xFF2B2333);
+
+  //area chart
+  static const Color areaChartColor = Color(0xFF597ab9);
+  static const Color areaChartColorSecondary = Color(0xFF6b617e);
+
+  static const Color areaChartLineColor = Color(0xFF8150a8);
 }

@@ -15,10 +15,16 @@ class ChartToggle extends StatelessWidget {
       buildWhen: (p, c) => p.chartType != c.chartType,
       builder: (context, state) {
         return Container(
-          // padding: const EdgeInsets.all(0),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(7),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.30),
+                blurRadius: 4,
+                offset: const Offset(3, 3),
+              ),
+            ],
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,

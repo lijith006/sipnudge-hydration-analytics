@@ -1,6 +1,13 @@
 class HydrationEntry {
   final DateTime date;
-  final double value;
+  final double water;
+  final double food;
 
-  const HydrationEntry({required this.date, required this.value});
+  const HydrationEntry({
+    required this.date,
+    required this.water,
+    required this.food,
+  });
+
+  double get total => water + food;
 }

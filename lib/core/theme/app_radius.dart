@@ -3,4 +3,5 @@ class AppRadius {
   static const double buttonCurved = 20;
   static const double button = 12;
   static const double nav = 24;
+  static const double navbar = 40;
 }

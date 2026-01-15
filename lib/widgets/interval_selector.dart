@@ -16,7 +16,7 @@ class IntervalSelector extends StatelessWidget {
     return BlocBuilder<AnalysisCubit, AnalysisState>(
       builder: (context, state) {
         return Container(
-          padding: const EdgeInsets.all(4),
+          padding: const EdgeInsets.all(2),
           decoration: BoxDecoration(
             color: AppColors.white,
             borderRadius: BorderRadius.circular(AppRadius.nav),
@@ -32,7 +32,7 @@ class IntervalSelector extends StatelessWidget {
                   },
                   child: AnimatedContainer(
                     duration: const Duration(milliseconds: 200),
-                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    padding: const EdgeInsets.symmetric(vertical: 8),
                     decoration: BoxDecoration(
                       color: isSelected
                           ? AppColors.intervalTabColor
@@ -45,8 +45,8 @@ class IntervalSelector extends StatelessWidget {
                     child: Text(
                       _label(interval),
                       style: isSelected
-                          ? AppTextStyles.urbanistBold.copyWith(fontSize: 15)
-                          : AppTextStyles.semiBoldBlack,
+                          ? AppTextStyles.intervalSelected
+                          : AppTextStyles.intervalUnselected,
                     ),
                   ),
                 ),

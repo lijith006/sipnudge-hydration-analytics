@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sipnudge_app/core/theme/%20app_surfaces.dart';
+import 'package:sipnudge_app/core/theme/app_surfaces.dart';
 import 'package:sipnudge_app/core/theme/app_text_styles.dart';
 import 'package:sipnudge_app/models/chart_type.dart';
 import 'package:sipnudge_app/widgets/charts/chart_toggle.dart';
@@ -19,50 +19,64 @@ class HydrationChartSection extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: AppSurfaces.card,
+        color: AppSurfaces.drinkCompletionCard,
         borderRadius: BorderRadius.circular(AppRadius.card),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.25),
+            offset: const Offset(4, 4),
+            blurRadius: 4,
+            spreadRadius: 0,
+          ),
+        ],
       ),
-      height: 300,
 
-      child: BlocBuilder<AnalysisCubit, AnalysisState>(
-        buildWhen: (p, c) => p.stats != c.stats || p.chartType != c.chartType,
+      child: AspectRatio(
+        aspectRatio: 1.2,
 
-        builder: (context, state) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Header
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Drink Completion',
-                    style: AppTextStyles.urbanistBold.copyWith(fontSize: 16),
-                  ),
-                  ChartToggle(),
-                ],
-              ),
+        child: BlocBuilder<AnalysisCubit, AnalysisState>(
+          buildWhen: (p, c) => p.stats != c.stats || p.chartType != c.chartType,
 
-              const SizedBox(height: 50),
+          builder: (context, state) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Header
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      state.chartType == ChartType.area
+                          ? 'Drink Completion (L)'
+                          : 'Drink Completion',
+                      style: AppTextStyles.drinkCompletionTitle,
+                    ),
 
-              // Bar chart
-              Expanded(
-                child: AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 300),
-                  child: state.chartType == ChartType.bar
-                      ? HydrationBarChart(
-                          key: const ValueKey('bar'),
-                          entries: state.stats.entries,
-                        )
-                      : HydrationAreaChart(
-                          key: const ValueKey('area'),
-                          entries: state.stats.entries,
-                        ),
+                    ChartToggle(),
+                  ],
                 ),
-              ),
-            ],
-          );
-        },
+
+                const SizedBox(height: 50),
+
+                // Bar chart
+                Expanded(
+                  child: AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 300),
+                    child: state.chartType == ChartType.bar
+                        ? HydrationBarChart(
+                            key: const ValueKey('bar'),
+                            entries: state.stats.entries,
+                          )
+                        : HydrationAreaChart(
+                            key: const ValueKey('area'),
+                            entries: state.stats.entries,
+                          ),
+                  ),
+                ),
+              ],
+            );
+          },
+        ),
       ),
     );
   }

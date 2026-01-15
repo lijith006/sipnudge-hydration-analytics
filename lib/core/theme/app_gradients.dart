@@ -15,4 +15,19 @@ class AppGradients {
       AppColors.deep2,
     ],
   );
+
+  static const LinearGradient hydrationWaterDonut = LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    colors: [
+      AppColors.waterColorGradient,
+      AppColors.waterColorGradientMid,
+      AppColors.waterColorGradientDark,
+    ],
+  );
+  static const bottomNavActive = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [Color(0xFF9870a0), Color(0xFF4b3650)],
+  );
 }

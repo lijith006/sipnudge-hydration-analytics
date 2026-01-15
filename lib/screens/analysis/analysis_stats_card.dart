@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sipnudge_app/core/theme/%20app_surfaces.dart';
+import 'package:sipnudge_app/core/theme/analysis_spacing.dart';
+
+import 'package:sipnudge_app/core/theme/app_surfaces.dart';
 import 'package:sipnudge_app/cubit/analysis.state.dart';
 import 'package:sipnudge_app/cubit/analysis_cubit.dart';
 import 'package:sipnudge_app/widgets/date_navigator.dart';
 import 'package:sipnudge_app/widgets/interval_selector.dart';
-import '../../../core/theme/app_radius.dart';
-import '../../../core/theme/app_spacing.dart';
 
 class AnalysisStatsCard extends StatelessWidget {
   const AnalysisStatsCard({super.key});
@@ -18,18 +18,27 @@ class AnalysisStatsCard extends StatelessWidget {
       builder: (context, state) {
         return Container(
           width: double.infinity,
-          padding: const EdgeInsets.all(AppSpacing.sm),
+          height: AnalysisSpacing.cardHeight,
+          padding: const EdgeInsets.symmetric(
+            horizontal: AnalysisSpacing.cardPaddingHorizontal,
+            vertical: AnalysisSpacing.cardPaddingVertical,
+          ),
           decoration: BoxDecoration(
             color: AppSurfaces.card,
-            borderRadius: BorderRadius.circular(AppRadius.card),
-            border: Border.all(color: Colors.white.withOpacity(0.28), width: 1),
+            borderRadius: BorderRadius.circular(AnalysisSpacing.cardRadius),
+            border: Border.all(
+              color: Colors.white.withOpacity(0.4),
+              width: AnalysisSpacing.cardBorderWidth,
+            ),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              IntervalSelector(),
-              SizedBox(height: AppSpacing.md),
-              DateNavigator(),
+              const IntervalSelector(),
+
+              const SizedBox(height: AnalysisSpacing.cardGapLow),
+
+              const DateNavigator(),
             ],
           ),
         );

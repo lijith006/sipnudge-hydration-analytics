@@ -23,16 +23,13 @@ class _HydrationBarChartState extends State<HydrationBarChart> {
 
   @override
   Widget build(BuildContext context) {
-    final count = widget.entries.length;
     double barWidth;
 
-    if (count <= 7) {
-      barWidth = 28; // weekly
-    } else if (count <= 12) {
-      barWidth = 18; // yearly
-    } else {
-      barWidth = 6; // monthly
-    }
+    final count = widget.entries.length;
+    final screenWidth = MediaQuery.of(context).size.width;
+    final usableWidth = screenWidth - 64;
+    barWidth = usableWidth / (count * 2.0);
+    barWidth = barWidth.clamp(6.0, 28.0);
 
     return BarChart(
       BarChartData(
@@ -89,9 +86,7 @@ class _HydrationBarChartState extends State<HydrationBarChart> {
 
                 return Text(
                   '${value.toInt()}%',
-                  style: AppTextStyles.body.copyWith(
-                    color: Colors.white.withOpacity(0.7),
-                  ),
+                  style: AppTextStyles.chartYAxisLabel,
                 );
               },
             ),
@@ -118,7 +113,10 @@ class _HydrationBarChartState extends State<HydrationBarChart> {
               touchedIndex = response.spot!.touchedBarGroupIndex;
             });
           },
+
+          //Tooltip
           touchTooltipData: BarTouchTooltipData(
+            fitInsideHorizontally: true,
             tooltipBorder: BorderSide(
               color: AppColors.barChartActiveColor,
               style: BorderStyle.solid,
@@ -134,7 +132,7 @@ class _HydrationBarChartState extends State<HydrationBarChart> {
             getTooltipItem: (group, _, rod, __) {
               return BarTooltipItem(
                 '${rod.toY.toInt()}%',
-                AppTextStyles.semiBold.copyWith(color: AppColors.deep2),
+                AppTextStyles.chartTooltip,
               );
             },
           ),
@@ -144,11 +142,11 @@ class _HydrationBarChartState extends State<HydrationBarChart> {
           return BarChartGroupData(
             x: i,
             // barsSpace: 2,
-            barsSpace: 1,
+            barsSpace: 0.5,
 
             barRods: [
               BarChartRodData(
-                toY: widget.entries[i].value,
+                toY: widget.entries[i].total,
                 width: barWidth,
                 borderRadius: const BorderRadius.vertical(
                   top: Radius.circular(20),
@@ -169,9 +167,6 @@ class _HydrationBarChartState extends State<HydrationBarChart> {
 Widget _xLabel(String text) {
   return Padding(
     padding: const EdgeInsets.only(top: 8),
-    child: Text(
-      text,
-      style: AppTextStyles.body.copyWith(color: Colors.white.withOpacity(0.6)),
-    ),
+    child: Text(text, style: AppTextStyles.chartXAxisLabel),
   );
 }
