@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:sipnudge_app/core/theme/app_text_styles.dart';
 import 'package:sipnudge_app/cubit/analysis_cubit.dart';
 import 'package:sipnudge_app/models/hydration_stats.dart';
+import 'package:sipnudge_app/widgets/charts/tooltips/bar_chart_tooltip.dart';
 import '../../models/hydration_entry.dart';
 import '../../core/theme/app_colors.dart';
 
@@ -95,53 +96,16 @@ class _HydrationBarChartState extends State<HydrationBarChart> {
           rightTitles: AxisTitles(),
           topTitles: AxisTitles(),
         ),
-
         barTouchData: BarTouchData(
           enabled: true,
           handleBuiltInTouches: true,
-          touchCallback: (event, response) {
-            if (!event.isInterestedForInteractions ||
-                response == null ||
-                response.spot == null) {
-              setState(() {
-                touchedIndex = null;
-              });
-              return;
-            }
-
-            setState(() {
-              touchedIndex = response.spot!.touchedBarGroupIndex;
-            });
-          },
-
-          //Tooltip
-          touchTooltipData: BarTouchTooltipData(
-            fitInsideHorizontally: true,
-            tooltipBorder: BorderSide(
-              color: AppColors.barChartActiveColor,
-              style: BorderStyle.solid,
-              width: 4,
-            ),
-            tooltipMargin: 10,
-            tooltipPadding: const EdgeInsets.symmetric(
-              horizontal: 3,
-              vertical: 5,
-            ),
-            tooltipBorderRadius: BorderRadius.circular(100),
-            getTooltipColor: (_) => Colors.white,
-            getTooltipItem: (group, _, rod, __) {
-              return BarTooltipItem(
-                '${rod.toY.toInt()}%',
-                AppTextStyles.chartTooltip,
-              );
-            },
-          ),
+          touchCallback: _handleTouch,
+          touchTooltipData: BarChartTooltip.build(),
         ),
 
         barGroups: List.generate(widget.entries.length, (i) {
           return BarChartGroupData(
             x: i,
-            // barsSpace: 2,
             barsSpace: 0.5,
 
             barRods: [
@@ -161,6 +125,17 @@ class _HydrationBarChartState extends State<HydrationBarChart> {
         }),
       ),
     );
+  }
+
+  void _handleTouch(FlTouchEvent event, BarTouchResponse? response) {
+    if (!event.isInterestedForInteractions || response?.spot == null) {
+      setState(() => touchedIndex = null);
+      return;
+    }
+
+    setState(() {
+      touchedIndex = response!.spot!.touchedBarGroupIndex;
+    });
   }
 }
 

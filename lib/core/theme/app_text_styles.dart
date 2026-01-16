@@ -5,7 +5,7 @@ class AppTextStyles {
   static const String lexend = 'Lexend';
   static const String urbanist = 'Urbanist';
 
-  //---------------- NAV BAR ----------------
+  //Nav bar
 
   // Lexend – navbar labels
   static const TextStyle navLabel = TextStyle(
@@ -16,7 +16,7 @@ class AppTextStyles {
     color: AppColors.textPrimary,
   );
 
-  // ---------------- HEADERS ----------------
+  // Headers
 
   // Urbanist / H5 / Bold – Drink Completion
   static const TextStyle drinkCompletionTitle = TextStyle(
@@ -36,7 +36,7 @@ class AppTextStyles {
     color: AppColors.textPrimary,
   );
 
-  // ---------------- BODY ----------------
+  //Body
 
   // Water 80% -Hydration Source card
   static const TextStyle hydrationValue = TextStyle(
@@ -56,7 +56,7 @@ class AppTextStyles {
     color: AppColors.textSecondary,
   );
 
-  // ---------------- DATE ----------------
+  // Date
 
   // Urbanist / H6 / Semibold – Date range
   static const TextStyle dateRange = TextStyle(
@@ -64,10 +64,10 @@ class AppTextStyles {
     fontSize: 14,
     fontWeight: FontWeight.w600,
     height: 1.4,
-    color: AppColors.textSecondary,
+    color: AppColors.white,
   );
 
-  // ---------------- INTERVAL TABS ----------------
+  //  Interval tabs
 
   // Urbanist / Large / Bold – Weekly / Monthly / Yearly
   static const TextStyle intervalSelected = TextStyle(
@@ -86,7 +86,7 @@ class AppTextStyles {
     color: AppColors.black,
   );
 
-  // ---------------- CHART ----------------
+  // Chart
 
   //   Y axis % labels
   static const TextStyle chartYAxisLabel = TextStyle(
@@ -108,7 +108,7 @@ class AppTextStyles {
   static const TextStyle chartTooltip = TextStyle(
     fontFamily: urbanist,
     fontSize: 12,
-    fontWeight: FontWeight.w500,
+    fontWeight: FontWeight.w600,
     height: 1.2,
     color: AppColors.deep2,
   );

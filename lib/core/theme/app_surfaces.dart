@@ -8,6 +8,5 @@ class AppSurfaces {
 
   /// Elevated card
   static Color cardElevated = AppColors.purpleDark.withOpacity(0.92);
-
   static Color glass = AppColors.deep2.withOpacity(0.6);
 }

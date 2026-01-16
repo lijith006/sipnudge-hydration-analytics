@@ -25,27 +25,34 @@ class AnalysisBottomNav extends StatelessWidget {
           ],
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: const [
-            BottomNavItem(
-              icon: 'assets/icons/home.png',
-              label: 'Home',
-              isActive: true,
+            Expanded(
+              child: BottomNavItem(
+                icon: 'assets/icons/home.png',
+                label: 'Home',
+                isActive: true,
+              ),
             ),
-            BottomNavItem(
-              icon: 'assets/icons/analysis.png',
-              label: 'Analysis',
-              isActive: false,
+            Expanded(
+              child: BottomNavItem(
+                icon: 'assets/icons/analysis.png',
+                label: 'Analysis',
+                isActive: false,
+              ),
             ),
-            BottomNavItem(
-              icon: 'assets/icons/emoji_events.png',
-              label: 'Goals',
-              isActive: false,
+            Expanded(
+              child: BottomNavItem(
+                icon: 'assets/icons/emoji_events.png',
+                label: 'Goals',
+                isActive: false,
+              ),
             ),
-            BottomNavItem(
-              icon: 'assets/icons/settings.png',
-              label: 'Settings',
-              isActive: false,
+            Expanded(
+              child: BottomNavItem(
+                icon: 'assets/icons/settings.png',
+                label: 'Settings',
+                isActive: false,
+              ),
             ),
           ],
         ),

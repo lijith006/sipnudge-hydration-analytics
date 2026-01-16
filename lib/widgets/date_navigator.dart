@@ -89,7 +89,7 @@ class _ArrowButton extends StatelessWidget {
             width: 16,
             height: 16,
             fit: BoxFit.contain,
-            color: AppColors.textSecondary,
+            color: AppColors.white,
           ),
         ),
       ),

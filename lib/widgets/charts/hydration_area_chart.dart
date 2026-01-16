@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:sipnudge_app/core/theme/app_text_styles.dart';
 import 'package:sipnudge_app/cubit/analysis_cubit.dart';
 import 'package:sipnudge_app/models/hydration_stats.dart';
+import 'package:sipnudge_app/widgets/charts/tooltips/area_chart_tooltip.dart';
 import '../../models/hydration_entry.dart';
 import '../../core/theme/app_colors.dart';
 
@@ -87,33 +88,7 @@ class HydrationAreaChart extends StatelessWidget {
         lineTouchData: LineTouchData(
           enabled: true,
           handleBuiltInTouches: true,
-          touchTooltipData: LineTouchTooltipData(
-            fitInsideHorizontally: true,
-            tooltipMargin: 10,
-            tooltipPadding: const EdgeInsets.symmetric(
-              horizontal: 4,
-              vertical: 12,
-            ),
-            tooltipBorderRadius: BorderRadius.circular(100),
-            tooltipBorder: BorderSide(
-              color: AppColors.barChartActiveColor,
-              width: 4,
-            ),
-            getTooltipColor: (_) => Colors.white,
-
-            getTooltipItems: (spots) {
-              const double dailyTargetLitres = 2.5;
-
-              return spots.map((spot) {
-                final litres = (spot.y / 100) * dailyTargetLitres;
-
-                return LineTooltipItem(
-                  '${litres.toStringAsFixed(2)} L',
-                  AppTextStyles.chartTooltip,
-                );
-              }).toList();
-            },
-          ),
+          touchTooltipData: AreaChartTooltip.build(dailyTargetLitres: 2.5),
         ),
 
         //Area section
